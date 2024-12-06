@@ -19,7 +19,10 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
-			"extensions": ["vmware.vscode-boot-dev-pack"]
+			"extensions": ["vmware.vscode-boot-dev-pack","vscjava.vscode-java-pack"],
+			"settings": {
+				"java.jdt.ls.java.home": "/usr/lib/jvm/msopenjdk-current"
+			}
 		}
 	}
 
