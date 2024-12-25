@@ -1,0 +1,12 @@
+spring.application.name: web
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-db1
+    username: postgres
+    password: postgres
+  sql:
+    init:
+      mode: never
+  config:
+    import:
+    - optional:configserver:http://localhost:8888
