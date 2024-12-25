@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: spring-db
+      POSTGRES_DB: spring-db1
     networks:
       - pow-nw
     ports:
@@ -16,4 +16,4 @@ services:
 networks:
   pow-nw:
 
-# postgres://postgres:postgres
+# postgres://postgres:postgres|

@@ -11,13 +11,30 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class WebConfig {
+
+
+    @Bean
+    UserDetailsPasswordService userDetailsPasswordService(UserDetailsManager detailsManager){
+        return new UserDetailsPasswordService() {
+            @Override
+            public UserDetails updatePassword(UserDetails user, String newPassword) {
+                var updated = User.withUserDetails(user).password(newPassword).build();
+                detailsManager.updateUser(updated);
+                return updated;
+            }
+            
+        };
+    }
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http

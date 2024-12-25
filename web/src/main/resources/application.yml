@@ -1,5 +1,9 @@
 spring.application.name: web
+
 spring:
+  profiles:
+    active:
+    - git
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-db1
     username: postgres
