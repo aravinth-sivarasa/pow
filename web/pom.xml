@@ -50,15 +50,15 @@
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.webauthn4j</groupId>
 			<artifactId>webauthn4j-core</artifactId>
-			<version>0.28.2.RELEASE</version>
-		</dependency> -->
+			<version>0.28.3.RELEASE</version>
+		</dependency>
 
 
 		<dependency>
