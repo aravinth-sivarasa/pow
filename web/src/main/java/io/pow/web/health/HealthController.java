@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthController {
 
-    @Value("${git.test.value}")
+    @Value("${git.test.value:-1}")
     String git_value;
 
     @GetMapping("health")

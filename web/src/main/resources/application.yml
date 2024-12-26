@@ -4,6 +4,8 @@ spring:
   profiles:
     active:
     - git
+    - config-server
+
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-db1
     username: postgres
@@ -11,6 +13,3 @@ spring:
   sql:
     init:
       mode: never
-  config:
-    import:
-    - optional:configserver:http://localhost:8888
