@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class WebConfig {
 
+    String baseURL= "http://localhost:8080";
     @Bean
     UserDetailsPasswordService userDetailsPasswordService(UserDetailsManager detailsManager) {
         return new UserDetailsPasswordService() {
@@ -34,7 +35,7 @@ public class WebConfig {
         return http
                 .oneTimeTokenLogin(
                         configure -> configure.tokenGenerationSuccessHandler((request, response, oneTimeToken) -> {
-                            var msg = "Please click the link below, http://localhost:8080/login/ott?token="
+                            var msg = "Please click the link below, "+baseURL+"/login/ott?token="
                                     + oneTimeToken.getTokenValue();
                             System.out.println(msg);
                             response.setContentType(org.springframework.http.MediaType.TEXT_HTML_VALUE);
@@ -45,7 +46,7 @@ public class WebConfig {
                 .webAuthn((webAuthn) -> webAuthn
                         .rpName("Spring Security Relying Party")
                         .rpId("localhost")
-                        .allowedOrigins("http://localhost:8080"))
+                        .allowedOrigins(baseURL))
                 .authorizeHttpRequests(r -> r
                         .requestMatchers("/admin")
                         .hasRole("ADMIN")
