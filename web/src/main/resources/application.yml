@@ -5,7 +5,7 @@ spring:
     active:
     - git
     - config-server
-
+    - email
   datasource:
     url: jdbc:postgresql://localhost:5432/spring-db1
     username: postgres

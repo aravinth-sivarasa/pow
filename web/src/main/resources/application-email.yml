@@ -1,0 +1,9 @@
+spring:
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        #username: username and password will be set through environment variables
+        properties:
+            mail.smtp.auth: true
+            mail.smtp.starttls.enable: true
+            mail.debug: true
