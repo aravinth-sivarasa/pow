@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.pow</groupId>
-	<artifactId>web</artifactId>
+	<artifactId>auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>web</name>
+	<name>auth</name>
 	<description>Demo project for Spring Boot</description>
 	<url />
 	<licenses>
