@@ -7,7 +7,7 @@ public enum ProductMessages {
     PRODUCT_NOT_FOUND("P40001", "Product not found"),
     PRODUCT_CODE_REQUIRED("P40002", "Product code is required"),
     PRODUCT_DESCRIPTION_REQUIRED("P40003", "Product description is required"),
-    PRODUCT_ALREADY_EXISTS("P40004", "Product already exists");
+    PRODUCT_ALREADY_EXISTS("P40004", "Product code already exists");
 
     private final String code;
     private final String message;
