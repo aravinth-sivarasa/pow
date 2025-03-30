@@ -2,10 +2,14 @@ package io.pow.backend.product;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.pow.backend.product.ProductService.ProductResponse;
+import io.pow.backend.product.dto.ProductRequest;
 
 @RestController
 @RequestMapping("/products/v1")
@@ -24,7 +28,13 @@ public class ProductControllerV1 {
                 ProductMessages.PRODUCT_CREATED.getMessage()));
     }
 
-    public record ProductRequest(String code, String description) {}
-    public record ProductResponse(String message) {}
+
+    @PostMapping("{code}/uom")
+    public String createProductUOM(@PathVariable String code, @RequestBody String entity) {
+        //TODO: process POST request
+        
+        return entity;
+    }
+    
 
 }

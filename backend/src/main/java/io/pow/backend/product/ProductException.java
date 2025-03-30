@@ -9,6 +9,10 @@ public class ProductException extends RuntimeException {
         super(message.getMessage());
         this.code = message.getCode();
     }
+    public ProductException(String code,String message) {
+        super(message);
+        this.code = code;
+    }
 
     public String getCode() {
         return code;

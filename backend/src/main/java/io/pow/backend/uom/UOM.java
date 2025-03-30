@@ -11,6 +11,12 @@ import lombok.Data;
 @Entity
 public class UOM {
 
+    public UOM(Long uomId) {
+        this.id = uomId;
+    }
+    public UOM() {
+        super();
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "uom_seq")
     @SequenceGenerator(name = "uom_seq", sequenceName = "uom_sequence", allocationSize = 1)
