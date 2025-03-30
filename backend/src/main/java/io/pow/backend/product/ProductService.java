@@ -3,6 +3,10 @@ package io.pow.backend.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,12 +20,18 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    public void createProduct(@ProductValidate ProductRequest productRequest) {
-        Product product = new Product();
-        product.setCode(productRequest.code());
-        product.setDescription(productRequest.description());
-        productRepository.save(product);
-        logger.info(ProductMessages.PRODUCT_CREATED.getMessage());
+    public void createProduct(@ProductValidate ProductRequest productRequest) {  
+        try {
+            String text = objectMapper.writeValueAsString(productRequest);
+            Product product = objectMapper.readValue(text, Product.class);
+            productRepository.save(product);
+            logger.info(ProductMessages.PRODUCT_CREATED.getMessage());
+        } catch (JsonProcessingException e) {
+            logger.error(ProductMessages.PRODUCT_JSON_PARSE.getMessage(), e);
+            throw new ProductException(ProductMessages.PRODUCT_JSON_PARSE);
+        }
     }
 }
