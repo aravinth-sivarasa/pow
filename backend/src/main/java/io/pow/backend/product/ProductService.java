@@ -13,21 +13,18 @@ public class ProductService {
 
     public void createProduct(ProductRequest productRequest) {
         if (productRequest.code() == null || productRequest.code().isEmpty()) {
-            throw new IllegalArgumentException(ProductMessages.PRODUCT_CODE_REQUIRED.getMessage());
+            throw new ProductException(ProductMessages.PRODUCT_CODE_REQUIRED);
         }
         if (productRequest.description() == null || productRequest.description().isEmpty()) {
-            throw new IllegalArgumentException(ProductMessages.PRODUCT_DESCRIPTION_REQUIRED.getMessage());
+            throw new ProductException(ProductMessages.PRODUCT_DESCRIPTION_REQUIRED);
         }
-
         Product product = new Product();
         product.setCode(productRequest.code());
         product.setDescription(productRequest.description());
 
         if (productRepository.existsByCode(product.getCode())) {
-            throw new IllegalArgumentException(ProductMessages.PRODUCT_ALREADY_EXISTS.getMessage());
+            throw new ProductException(ProductMessages.PRODUCT_ALREADY_EXISTS);
         }
-
         productRepository.save(product);
     }
-
 }
