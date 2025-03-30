@@ -2,29 +2,26 @@ package io.pow.backend.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.pow.backend.product.ProductControllerV1.ProductRequest;
 
 @Service
+@Validated
 public class ProductService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     @Autowired
     private ProductRepository productRepository;
 
-    public void createProduct(ProductRequest productRequest) {
-        if (productRequest.code() == null || productRequest.code().isEmpty()) {
-            throw new ProductException(ProductMessages.PRODUCT_CODE_REQUIRED);
-        }
-        if (productRequest.description() == null || productRequest.description().isEmpty()) {
-            throw new ProductException(ProductMessages.PRODUCT_DESCRIPTION_REQUIRED);
-        }
+    public void createProduct(@ProductValidate ProductRequest productRequest) {
         Product product = new Product();
         product.setCode(productRequest.code());
         product.setDescription(productRequest.description());
-
-        if (productRepository.existsByCode(product.getCode())) {
-            throw new ProductException(ProductMessages.PRODUCT_ALREADY_EXISTS);
-        }
         productRepository.save(product);
+        logger.info(ProductMessages.PRODUCT_CREATED.getMessage());
     }
 }
