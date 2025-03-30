@@ -1,0 +1,8 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "rest-client.environmentVariables": {
+        "dev": {
+            "baseUrl": "http://localhost:8080"
+        }
+    }
+}
