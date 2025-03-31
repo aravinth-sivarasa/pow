@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.pow.backend.product.dto.ProductRequest;
 import io.pow.backend.product.dto.ProductUOMRequest;
 import io.pow.backend.uom.UOM;
-import io.pow.backend.uom.UOMException;
 import io.pow.backend.uom.UOMMessages;
 import io.pow.backend.uom.UOMRepository;
 
@@ -33,7 +32,7 @@ public @interface ProductUOMValidate {
     Class<? extends Payload>[] payload() default {};
 }
 
-class ProductUOMValidator implements ConstraintValidator<ProductValidate, ProductRequest> {
+class ProductUOMValidator implements ConstraintValidator<ProductUOMValidate, ProductRequest> {
     private static final Logger logger = LoggerFactory.getLogger(ProductUOMValidator.class);
 
     @Autowired

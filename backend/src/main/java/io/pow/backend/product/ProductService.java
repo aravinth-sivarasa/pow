@@ -37,8 +37,7 @@ public class ProductService {
         }
     }
 
-    public void createProductUOM(ProductRequest productRequest) {
-
+    public void createProductUOMs(@ProductUOMValidate ProductRequest productRequest) {
         Long productId = productRequest.getProductId();
         productRequest.getProductUOMs().forEach(productUOMRequest -> {
             Long uomId = productUOMRequest.getUOMID();
@@ -47,7 +46,6 @@ public class ProductService {
             productUOMRepository.save(productUOM);
         });
         logger.info(ProductMessages.PRODUCT_UOM_CREATED.getMessage());
-
     }
 
     public record ProductResponse(String message) {

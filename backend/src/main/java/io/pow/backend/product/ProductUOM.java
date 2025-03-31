@@ -11,6 +11,8 @@ import io.pow.backend.uom.UOM;
 @Entity
 public class ProductUOM {
 
+    public ProductUOM() {
+    }
     @EmbeddedId
     private ProductUOMKey id;
     private BigDecimal unitPrice;

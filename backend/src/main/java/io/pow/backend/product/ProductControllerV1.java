@@ -29,11 +29,12 @@ public class ProductControllerV1 {
     }
 
 
-    @PostMapping("{code}/uom")
-    public String createProductUOM(@PathVariable String code, @RequestBody String entity) {
-        //TODO: process POST request
-        
-        return entity;
+    @PostMapping("{code}/uoms")
+    public ResponseEntity<ProductResponse> createProductUOMs(@PathVariable String code, @RequestBody ProductRequest productRequest) {
+        productRequest.setCode(code);
+        productService.createProductUOMs(productRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponse(
+                ProductMessages.PRODUCT_UOM_CREATED.getMessage()));
     }
     
 

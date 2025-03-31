@@ -9,9 +9,12 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import io.pow.backend.product.dto.ProductRequest;
 import jakarta.annotation.PostConstruct;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ProductTests {
@@ -80,6 +83,49 @@ public class ProductTests {
         assertThat(response.getBody().error()).isEqualTo("Product code already exists");
     }
 
+    @Test
+    void createProductUOMs_Success() throws Exception {
+        String code = "code1UOM";
+        createProduct(code, "description1"); // Ensure the product exists
+        createUOM("uomCode1", "uomCode1");
+        ProductUOMTestRequest uomRequest = new ProductUOMTestRequest("uomCode1", 100.50);
+        ProductTestRequest productRequest = new ProductTestRequest(List.of(uomRequest));
+
+        ResponseEntity<ProductTestResponse> response = createProductUOMs(code, productRequest);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().message()).isEqualTo("Product UOM created successfully");
+    }
+
+    @Test
+    void createProductUOMs_ProductNotFound() throws Exception {
+        String code = "nonExistentCode";
+
+        ProductUOMTestRequest uomRequest = new ProductUOMTestRequest("uomCode1", 100.50);
+        ProductTestRequest productRequest = new ProductTestRequest(List.of(uomRequest));
+
+        ResponseEntity<ProductTestResponse> response = createProductUOMs(code, productRequest);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().code()).isEqualTo("P40001");
+        assertThat(response.getBody().error()).isEqualTo("Product not found");
+    }
+
+    @Test
+    void createProductUOMs_UOMNotFound() throws Exception {
+        String code = "code2UOM";
+        createProduct(code, "description1"); // Ensure the product exists
+
+        ProductUOMTestRequest uomRequest = new ProductUOMTestRequest("nonExistentUOM", 100.50);
+        ProductTestRequest productRequest = new ProductTestRequest( List.of(uomRequest));
+
+        ResponseEntity<ProductTestResponse> response = createProductUOMs(code, productRequest);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().code()).isEqualTo("U40004");
+        assertThat(response.getBody().error()).isEqualTo("UOM not found");
+    }
+
     private ResponseEntity<ProductTestResponse> createProduct(String code, String description) {
         String url = baseUrl + "/products/v1";
         return this.restTemplate.postForEntity(
@@ -87,10 +133,36 @@ public class ProductTests {
                 new ProductTestRequest(code, description),
                 ProductTestResponse.class);
     }
-
-    public record ProductTestRequest(String code, String description) {
+    private ResponseEntity<UOMTestResponse> createUOM(String code, String description) {
+        String url = baseUrl + "/uoms/v1";
+        return this.restTemplate.postForEntity(
+                url,
+                new UOMTestRequest(code, description),
+                UOMTestResponse.class);
     }
 
+    private ResponseEntity<ProductTestResponse> createProductUOMs(String code, ProductTestRequest productRequest) {
+        String url = baseUrl + "/products/v1/" + code + "/uoms";
+        return this.restTemplate.postForEntity(
+                url,
+                productRequest,
+                ProductTestResponse.class);
+    }
+
+    public record UOMTestRequest(String code, String description) {
+    }
+    public record UOMTestResponse(String code, String message, String error) {
+    }
+    public record ProductTestRequest(String code, String description,List<ProductUOMTestRequest> productUOMs) {
+        public ProductTestRequest(List<ProductUOMTestRequest> productUOMs) {
+            this(null, null, productUOMs);
+        }
+        public ProductTestRequest(String code, String description) {
+            this(code, description, null);
+        }
+    }
     public record ProductTestResponse(String code, String message, String error) {
+    }
+    public record ProductUOMTestRequest(String code, double unitPrice) {
     }
 }
