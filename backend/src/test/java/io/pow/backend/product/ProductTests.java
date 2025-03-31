@@ -9,7 +9,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import io.pow.backend.product.dto.ProductRequest;
+import io.pow.backend.uom.UOMTests.UOMTestRequest;
+import io.pow.backend.uom.UOMTests.UOMTestResponse;
 import jakarta.annotation.PostConstruct;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -149,10 +150,6 @@ public class ProductTests {
                 ProductTestResponse.class);
     }
 
-    public record UOMTestRequest(String code, String description) {
-    }
-    public record UOMTestResponse(String code, String message, String error) {
-    }
     public record ProductTestRequest(String code, String description,List<ProductUOMTestRequest> productUOMs) {
         public ProductTestRequest(List<ProductUOMTestRequest> productUOMs) {
             this(null, null, productUOMs);

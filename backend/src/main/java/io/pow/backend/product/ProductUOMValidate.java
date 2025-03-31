@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 @Target({ ElementType.TYPE, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ProductUOMValidate {
-    String message() default "Invalid product";
+    String message() default "Invalid product UOM";
 
     Class<?>[] groups() default {};
 
