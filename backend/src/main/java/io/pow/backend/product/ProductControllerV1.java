@@ -41,7 +41,7 @@ public class ProductControllerV1 {
                 ProductMessages.PRODUCT_UOM_CREATED.getMessage()));
     }
 
-    @GetMapping({"/", "/{code}"})
+    @GetMapping({"", "/{code}"})
     public ResponseEntity<List<Product>> listProducts(@PathVariable(required = false) String code) {
         List<Product> products = productService.listProducts(code);
         return ResponseEntity.ok(products);

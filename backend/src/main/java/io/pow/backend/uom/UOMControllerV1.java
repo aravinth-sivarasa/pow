@@ -30,7 +30,7 @@ public class UOMControllerV1 {
                 .body(new UOMResponse(UOMMessages.UOM_CREATED.getMessage()));
     }
 
-    @GetMapping({"/", "/{code}"})
+    @GetMapping({"", "/{code}"})
     public ResponseEntity<List<UOM>> listUOMs(@PathVariable(required = false) String code) {
         List<UOM> uoms = uomService.listUOMs(code);
         return ResponseEntity.ok(uoms);
