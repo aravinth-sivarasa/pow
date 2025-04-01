@@ -1,0 +1,29 @@
+<app-product-edit [product]="product"></app-product-edit>
+<div class="product-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.code }}</td>
+        <td>{{ product.description }}</td>
+        <td><a href="product/{{ product.code }}" >Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="product-cards">
+  <div class="product-card" *ngFor="let product of products">
+    <div class="product-card-content">
+      <p><strong>Code:</strong> {{ product.code }}</p>
+      <p><strong>Description:</strong> {{ product.description }}</p>
+      <a href="product/{{ product.code }}">Edit</a>
+    </div>
+  </div>
+</div>
