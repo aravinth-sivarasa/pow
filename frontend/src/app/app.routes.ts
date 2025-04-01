@@ -9,5 +9,9 @@ export const routes: Routes = [
     {
         path: 'product',
         loadChildren: () => import('./product/product-routing.module').then(m => m.ProductRoutingModule),
+    },
+    {
+        path: 'uom',
+        loadChildren: () => import('./uom/uom-routing.module').then(m => m.UomRoutingModule),
     }
 ];
