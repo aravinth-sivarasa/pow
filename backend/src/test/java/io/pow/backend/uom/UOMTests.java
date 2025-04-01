@@ -79,6 +79,37 @@ public class UOMTests {
         assertThat(response.getBody().error()).isEqualTo("UOM code already exists");
     }
 
+    @Test
+    void listUOMs_AllUOMs() throws Exception {
+        // Create some UOMs
+        createUOM("code1list", "description1");
+        createUOM("code2list", "description2");
+
+        // Test listing all UOMs
+        String url = baseUrl + "/uoms/v1/";
+        ResponseEntity<UOM[]> response = restTemplate.getForEntity(url, UOM[].class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().length).isGreaterThanOrEqualTo(2);
+    }
+
+    @Test
+    void listUOMs_ByCode() throws Exception {
+        // Create a UOM
+        String code = "codeAAA";
+        createUOM(code, "descriptionA");
+
+        // Test listing UOM by code
+        String url = baseUrl + "/uoms/v1/" + code;
+        ResponseEntity<UOM[]> response = restTemplate.getForEntity(url, UOM[].class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().length).isEqualTo(1);
+        assertThat(response.getBody()[0].getCode()).isEqualTo(code);
+    }
+
     private ResponseEntity<UOMTestResponse> createUOM(String code, String description) {
         String url = baseUrl + "/uoms/v1";
         return this.restTemplate.postForEntity(

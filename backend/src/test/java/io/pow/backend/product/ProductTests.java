@@ -127,6 +127,33 @@ public class ProductTests {
         assertThat(response.getBody().error()).isEqualTo("UOM not found");
     }
 
+    @Test
+    void getProducts_AllProducts() throws Exception {
+        createProduct("code1list", "description1");
+        createProduct("code2list", "description2");
+
+        String url = baseUrl + "/products/v1/";
+        ResponseEntity<Product[]> response = restTemplate.getForEntity(url, Product[].class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().length).isGreaterThanOrEqualTo(2);
+    }
+
+    @Test
+    void getProducts_ByCode() throws Exception {
+        String code = "codeSpecific";
+        createProduct(code, "descriptionSpecific");
+
+        String url = baseUrl + "/products/v1/" + code;
+        ResponseEntity<Product[]> response = restTemplate.getForEntity(url, Product[].class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().length).isEqualTo(1);
+        assertThat(response.getBody()[0].getCode()).isEqualTo(code);
+    }
+
     private ResponseEntity<ProductTestResponse> createProduct(String code, String description) {
         String url = baseUrl + "/products/v1";
         return this.restTemplate.postForEntity(

@@ -12,6 +12,9 @@ import io.pow.backend.product.dto.ProductRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Validated
 public class ProductService {
@@ -46,6 +49,17 @@ public class ProductService {
             productUOMRepository.save(productUOM);
         });
         logger.info(ProductMessages.PRODUCT_UOM_CREATED.getMessage());
+    }
+
+    public List<Product> listProducts(String codeStr) {
+        Optional<String> code = Optional.ofNullable(codeStr);
+        if (code.isEmpty()) {
+            return productRepository.findAll();
+        } else {
+            return productRepository.findByCode(code.get())
+                    .map(List::of)
+                    .orElse(List.of());
+        }
     }
 
     public record ProductResponse(String message) {

@@ -9,6 +9,9 @@ import io.pow.backend.uom.UOMControllerV1.UOMRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Validated
 public class UOMService {
@@ -26,6 +29,15 @@ public class UOMService {
         logger.info(UOMMessages.UOM_CREATED.getMessage());
     }
 
-
+    public List<UOM> listUOMs(String codeStr) {
+        Optional<String> code = Optional.ofNullable(codeStr);
+        if (code.isEmpty()) {
+            return uomRepository.findAll();
+        } else {
+            return uomRepository.findByCode(code.get())
+                    .map(List::of)
+                    .orElse(List.of());
+        }
+    }
 
 }
