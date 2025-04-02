@@ -1,3 +1,5 @@
+
+<app-uom-edit [uom]="uom"></app-uom-edit>        
 <div class="uom-table">
   <table>
     <thead>
@@ -15,4 +17,13 @@
       </tr>
     </tbody>
   </table>
+</div>
+<div class="uom-cards">
+  <div class="uom-card" *ngFor="let uom of uoms">
+    <div class="uom-card-content">
+      <p><strong>Code:</strong> {{ uom.code }}</p>
+      <p><strong>Description:</strong> {{ uom.description }}</p>
+      <a href="uom/{{ uom.code }}">Edit</a>
+    </div>
+  </div>
 </div>
