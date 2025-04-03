@@ -66,8 +66,8 @@ export class ProductEditComponent implements OnInit {
   private apiCheckCode(code: string): Promise<boolean> {
     return new Promise((resolve) => {
       this.productService.getProductByCode(code).subscribe({
-        next: (product) => resolve(!!product), // Resolve true if product exists
-        error: () => resolve(false) // Resolve false if product does not exist
+        next: (response) => resolve(Array.isArray(response) && response.length > 0), // Check if response is an array and not empty
+        error: () => resolve(false) // Resolve false if an error occurs
       });
     });
   }

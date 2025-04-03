@@ -15,6 +15,8 @@ export class UomEditComponent implements OnInit {
   @Input() uom: any;
   form: FormGroup;
   isEditMode: boolean = false;
+  isCodeAvailable: boolean | null = null;
+  codeStatus: string = '';
 
   constructor(private fb: FormBuilder, private router: Router, private uomService: UomService) {
     this.form = this.fb.group({
@@ -28,6 +30,28 @@ export class UomEditComponent implements OnInit {
       this.isEditMode = true;
       this.form.patchValue(this.uom);
     }
+  }
+
+  checkCode(): void {
+    const code = this.form.get('code')?.value;
+    if (!code) {
+      this.isCodeAvailable = null;
+      this.codeStatus = '';
+      return;
+    }
+    this.apiCheckCode(code).then((exists) => {
+      this.isCodeAvailable = !exists;
+      this.codeStatus = exists ? 'Code already exists' : 'Code is available';
+    });
+  }
+
+  private apiCheckCode(code: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.uomService.getUomByCode(code).subscribe({
+        next: (response) => resolve(Array.isArray(response) && response.length > 0), 
+        error: () => resolve(false) // Resolve false if an error occurs
+      });
+    });
   }
 
   submit(): void {

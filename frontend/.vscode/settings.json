@@ -3,5 +3,17 @@
         "dev": {
             "baseUrl": "http://localhost:8080"
         }
-    }
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "local-pg",
+            "username": "postgres",
+            "password": "postgres",
+            "database": "spring-db1"
+        }
+    ]
 }

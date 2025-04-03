@@ -23,7 +23,9 @@ export class ProductViewComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const code = params.get('code');
       if (code) {
-        this.product = this.products.find(p => p.code === code);
+        this.productService.getProductByCode(code).subscribe((product: any) => {
+          this.product = product; // Load product by code from the service
+        });
       }
     });
   }
