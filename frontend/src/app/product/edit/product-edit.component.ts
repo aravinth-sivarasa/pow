@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../product-service';
 
 @Component({
@@ -18,7 +18,7 @@ export class ProductEditComponent implements OnInit {
   isCodeAvailable: boolean | null = null;
   isEditMode: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private productService: ProductService) {
+  constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private route: ActivatedRoute) {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.maxLength(4)]],
       description: ['', Validators.required]
@@ -29,10 +29,32 @@ export class ProductEditComponent implements OnInit {
     if (this.product) {
       this.isEditMode = true;
       this.form.patchValue(this.product);
+    } else {
+      const code = this.route.snapshot.paramMap.get('code'); // Get code from URL
+      if (code) {
+        this.productService.getProductByCode(code).subscribe({
+          next: (response) => {
+            if (Array.isArray(response) && response.length > 0) {
+              this.product = response[0];
+              this.isEditMode = true;
+              this.form.patchValue(this.product);
+            }
+          },
+          error: (err) => {
+            console.error('Error fetching product by code:', err);
+          }
+        });
+      }
     }
   }
 
   checkCode(): void {
+    if (this.isEditMode) {
+      this.isCodeAvailable = null;
+      this.codeStatus = '';
+      return; // Skip code check in edit mode
+    }
+
     const code = this.form.get('code')?.value;
     if (!code) {
       this.isCodeAvailable = null;

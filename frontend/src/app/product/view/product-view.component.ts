@@ -12,21 +12,12 @@ import { ProductService } from '../product-service'; // Import ProductService
 })
 export class ProductViewComponent implements OnInit {
   products: any[] = []; // Initialize as an empty array
-  product: any;
 
   constructor(private route: ActivatedRoute, private productService: ProductService) {} // Inject ProductService
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data: any) => {
       this.products = data; // Load products from the service
-    });
-    this.route.paramMap.subscribe(params => {
-      const code = params.get('code');
-      if (code) {
-        this.productService.getProductByCode(code).subscribe((product: any) => {
-          this.product = product; // Load product by code from the service
-        });
-      }
     });
   }
 }

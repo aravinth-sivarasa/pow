@@ -1,1 +1,0 @@
-chrome.exe --disable-web-security --user-data-dir="C:\Users\aravi\tmp" --allow-file-access-from-files --allow-file-access
