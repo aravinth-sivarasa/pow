@@ -14,6 +14,7 @@ import java.util.List;
 
 import io.pow.backend.product.ProductService.ProductResponse;
 import io.pow.backend.product.dto.ProductRequest;
+import io.pow.backend.product.entity.Product;
 
 @RestController
 @RequestMapping("/products/v1")

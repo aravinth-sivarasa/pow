@@ -2,7 +2,7 @@ package io.pow.backend.txn;
 
 import java.util.List;
 
-import io.pow.backend.product.ProductUOM;
+import io.pow.backend.product.entity.ProductUOM;
 import lombok.Data;
 
 @Data

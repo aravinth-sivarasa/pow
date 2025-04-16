@@ -8,6 +8,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.pow.backend.product.dto.ProductRequest;
+import io.pow.backend.product.entity.Product;
+import io.pow.backend.product.entity.ProductUOM;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

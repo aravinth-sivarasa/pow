@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.pow.backend.product.ProductMessages;
-import io.pow.backend.product.ProductUOM;
 import io.pow.backend.product.ProductUOMRepository;
+import io.pow.backend.product.entity.ProductUOM;
 
 @Constraint(validatedBy = TxnValidator.class)
 @Target({ ElementType.TYPE, ElementType.PARAMETER })

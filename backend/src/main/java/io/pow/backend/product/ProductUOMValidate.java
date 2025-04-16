@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import io.pow.backend.product.dto.ProductRequest;
 import io.pow.backend.product.dto.ProductUOMRequest;
+import io.pow.backend.product.entity.Product;
 import io.pow.backend.uom.UOM;
 import io.pow.backend.uom.UOMMessages;
 import io.pow.backend.uom.UOMRepository;

@@ -2,7 +2,7 @@ package io.pow.backend.txn;
 
 import java.math.BigDecimal;
 
-import io.pow.backend.product.ProductUOM;
+import io.pow.backend.product.entity.ProductUOM;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import io.pow.backend.product.entity.Product;
 import io.pow.backend.uom.UOMTests.UOMTestRequest;
 import io.pow.backend.uom.UOMTests.UOMTestResponse;
 import jakarta.annotation.PostConstruct;

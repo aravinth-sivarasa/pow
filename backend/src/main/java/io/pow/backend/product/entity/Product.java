@@ -1,4 +1,4 @@
-package io.pow.backend.product;
+package io.pow.backend.product.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

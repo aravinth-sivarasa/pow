@@ -12,19 +12,12 @@ import { UomEditComponent } from "../edit/uom-edit.component";
 })
 export class UomViewComponent implements OnInit {
   uoms: any[] = [];
-  uom: any;
 
-  constructor(private route: ActivatedRoute, private uomService: UomService) {}
+  constructor(private uomService: UomService) {}
 
   ngOnInit(): void {
     this.uomService.getUoms().subscribe((data: any) => {
       this.uoms = data;
-    });
-    this.route.paramMap.subscribe(params => {
-      const code = params.get('code');
-      if (code) {
-        this.uom = this.uoms.find(u => u.code === code);
-      }
     });
   }
 }

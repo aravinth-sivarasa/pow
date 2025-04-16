@@ -1,4 +1,4 @@
-package io.pow.backend.product;
+package io.pow.backend.product.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,11 +24,3 @@ public class ProductUOM {
     }
 }
 
-@Data
-@Embeddable
-class ProductUOMKey {
-    @ManyToOne
-    private Product product;
-    @ManyToOne
-    private UOM uom;
-}
