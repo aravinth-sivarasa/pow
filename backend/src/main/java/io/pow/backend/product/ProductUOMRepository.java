@@ -5,12 +5,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import io.pow.backend.product.entity.ProductUOM;
-import io.pow.backend.product.entity.ProductUOMKey;
+import io.pow.backend.product.entity.ProductUoM;
+import io.pow.backend.product.entity.ProductUoMKey;
 
-public interface ProductUOMRepository extends JpaRepository<ProductUOM, ProductUOMKey> {
+public interface ProductUOMRepository extends JpaRepository<ProductUoM, ProductUoMKey> {
 
-   @Query("SELECT pu FROM ProductUOM pu WHERE pu.id.product.code = :productCode AND pu.id.uom.code = :uomCode")
-   public Optional<ProductUOM> findByProductCodeAndUomCode(String productCode, String uomCode);
+   @Query("SELECT pu FROM ProductUoM pu WHERE pu.id.product.code = :productCode AND pu.id.uom.code = :uomCode")
+   public Optional<ProductUoM> findByProductCodeAndUomCode(String productCode, String uomCode);
     
 }

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.pow.backend.product.dto.ProductRequest;
 import io.pow.backend.product.entity.Product;
-import io.pow.backend.product.entity.ProductUOM;
+import io.pow.backend.product.entity.ProductUoM;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ public class ProductService {
         UUID productId = productRequest.getProductId();
         productRequest.getProductUOMs().forEach(productUOMRequest -> {
             UUID uomId = productUOMRequest.getUOMID();
-            ProductUOM productUOM = new ProductUOM(
+            ProductUoM productUOM = new ProductUoM(
                     productId, uomId, productUOMRequest.getUnitPrice());
             productUOMRepository.save(productUOM);
         });

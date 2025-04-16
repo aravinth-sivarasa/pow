@@ -2,7 +2,7 @@ package io.pow.backend.txn;
 
 import java.util.List;
 
-import io.pow.backend.product.entity.ProductUOM;
+import io.pow.backend.product.entity.ProductUoM;
 import lombok.Data;
 
 @Data
@@ -14,5 +14,5 @@ class TxnDetailRequest {
     private String productCode;
     private String uomCode;
     private Integer qty;
-    private ProductUOM productUOM;
+    private ProductUoM productUOM;
 }

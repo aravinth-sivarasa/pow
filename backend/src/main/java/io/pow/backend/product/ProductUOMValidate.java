@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.pow.backend.product.dto.ProductRequest;
 import io.pow.backend.product.dto.ProductUOMRequest;
 import io.pow.backend.product.entity.Product;
-import io.pow.backend.uom.UOM;
+import io.pow.backend.uom.UoM;
 import io.pow.backend.uom.UOMMessages;
 import io.pow.backend.uom.UOMRepository;
 
@@ -58,7 +58,7 @@ class ProductUOMValidator implements ConstraintValidator<ProductUOMValidate, Pro
                     logger.error(ProductMessages.PRODUCT_NOT_FOUND.getMessage());
                     return new ProductException(ProductMessages.PRODUCT_NOT_FOUND);
                 });
-        productRequest.setProductId(product.getId());
+        productRequest.setProductId(product.getToken());
     }
 
     private void validateUOMs(ProductRequest productRequest) {
@@ -67,13 +67,13 @@ class ProductUOMValidator implements ConstraintValidator<ProductUOMValidate, Pro
             throw new ProductException(ProductMessages.PRODUCT_UOM_REQUIRED);
         }
         for (ProductUOMRequest productUOM : productRequest.getProductUOMs()) {
-            UOM uom = uomRepository.findByCode(productUOM.getCode())
+            UoM uom = uomRepository.findByCode(productUOM.getCode())
                     .orElseThrow(() -> {
                         logger.error(UOMMessages.UOM_NOT_FOUND.getMessage());
                         return new ProductException(UOMMessages.UOM_NOT_FOUND.getCode(),
                                 UOMMessages.UOM_NOT_FOUND.getMessage());
                     });
-            productUOM.setUOMID(uom.getId());
+            productUOM.setUOMID(uom.getToken());
 
         }
     }

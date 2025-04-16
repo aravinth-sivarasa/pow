@@ -22,14 +22,14 @@ public class UOMService {
     private UOMRepository uomRepository;
 
     public void createUOM(@UOMValidate UOMRequest uomRequest) {
-        UOM uom = new UOM();
+        UoM uom = new UoM();
         uom.setCode(uomRequest.code());
         uom.setDescription(uomRequest.description());
         uomRepository.save(uom);
         logger.info(UOMMessages.UOM_CREATED.getMessage());
     }
 
-    public List<UOM> listUOMs(String codeStr) {
+    public List<UoM> listUOMs(String codeStr) {
         Optional<String> code = Optional.ofNullable(codeStr);
         if (code.isEmpty()) {
             return uomRepository.findAll();

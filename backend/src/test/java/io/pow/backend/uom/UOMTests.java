@@ -86,8 +86,8 @@ public class UOMTests {
         createUOM("code2list", "description2");
 
         // Test listing all UOMs
-        String url = baseUrl + "/uoms/v1/";
-        ResponseEntity<UOM[]> response = restTemplate.getForEntity(url, UOM[].class);
+        String url = baseUrl + "/uoms/v1";
+        ResponseEntity<UoM[]> response = restTemplate.getForEntity(url, UoM[].class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -102,7 +102,7 @@ public class UOMTests {
 
         // Test listing UOM by code
         String url = baseUrl + "/uoms/v1/" + code;
-        ResponseEntity<UOM[]> response = restTemplate.getForEntity(url, UOM[].class);
+        ResponseEntity<UoM[]> response = restTemplate.getForEntity(url, UoM[].class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();

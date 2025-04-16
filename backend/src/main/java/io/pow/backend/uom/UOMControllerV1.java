@@ -31,8 +31,8 @@ public class UOMControllerV1 {
     }
 
     @GetMapping({"", "/{code}"})
-    public ResponseEntity<List<UOM>> listUOMs(@PathVariable(required = false) String code) {
-        List<UOM> uoms = uomService.listUOMs(code);
+    public ResponseEntity<List<UoM>> listUOMs(@PathVariable(required = false) String code) {
+        List<UoM> uoms = uomService.listUOMs(code);
         return ResponseEntity.ok(uoms);
     }
 

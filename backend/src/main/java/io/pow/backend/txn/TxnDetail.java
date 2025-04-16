@@ -2,7 +2,7 @@ package io.pow.backend.txn;
 
 import java.math.BigDecimal;
 
-import io.pow.backend.product.entity.ProductUOM;
+import io.pow.backend.product.entity.ProductUoM;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +22,7 @@ public class TxnDetail {
     @ManyToOne
     private Txn txn;
     @ManyToOne
-    private ProductUOM productUOM;
+    private ProductUoM productUOM;
     private BigDecimal unitPrice;
     private BigDecimal totalAmount;
     private Integer qty;

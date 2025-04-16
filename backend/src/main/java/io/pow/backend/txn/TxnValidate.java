@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import io.pow.backend.product.ProductMessages;
 import io.pow.backend.product.ProductUOMRepository;
-import io.pow.backend.product.entity.ProductUOM;
+import io.pow.backend.product.entity.ProductUoM;
 
 @Constraint(validatedBy = TxnValidator.class)
 @Target({ ElementType.TYPE, ElementType.PARAMETER })
@@ -39,7 +39,7 @@ class TxnValidator implements ConstraintValidator<TxnValidate, TxnRequest> {
     public boolean isValid(TxnRequest txnRequest, ConstraintValidatorContext context) {
         txnRequest.getTxnDetails()
                 .forEach(txnDetail -> {
-                    ProductUOM row = productUOMRepository.findByProductCodeAndUomCode(txnDetail.getProductCode(), txnDetail.getUomCode())
+                    ProductUoM row = productUOMRepository.findByProductCodeAndUomCode(txnDetail.getProductCode(), txnDetail.getUomCode())
                             .orElseThrow(() -> {
                                 logger.error(ProductMessages.PRODUCT_UOM_NOT_FOUND.getMessage());
                                 return new TxnException(ProductMessages.PRODUCT_UOM_NOT_FOUND.getCode(),

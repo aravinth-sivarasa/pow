@@ -73,6 +73,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		  <!-- Hibernate Dialect and JDBC Driver dependencies-->
+		  <dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-spanner-hibernate-dialect</artifactId>
+			<version>3.7.0</version>
+		  </dependency>
+		  <dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-spanner-jdbc</artifactId>
+			<version>2.21.0</version>
+		  </dependency>
 	</dependencies>
 
 	<build>
