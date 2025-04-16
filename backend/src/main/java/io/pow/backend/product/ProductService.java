@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Validated
@@ -43,9 +44,9 @@ public class ProductService {
     }
 
     public void createProductUOMs(@ProductUOMValidate ProductRequest productRequest) {
-        Long productId = productRequest.getProductId();
+        UUID productId = productRequest.getProductId();
         productRequest.getProductUOMs().forEach(productUOMRequest -> {
-            Long uomId = productUOMRequest.getUOMID();
+            UUID uomId = productUOMRequest.getUOMID();
             ProductUOM productUOM = new ProductUOM(
                     productId, uomId, productUOMRequest.getUnitPrice());
             productUOMRepository.save(productUOM);

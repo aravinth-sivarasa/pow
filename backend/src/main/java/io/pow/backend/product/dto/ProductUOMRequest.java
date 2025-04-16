@@ -1,6 +1,7 @@
 package io.pow.backend.product.dto;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import lombok.Data;
 
@@ -8,5 +9,5 @@ import lombok.Data;
 public class ProductUOMRequest {
     private String code;
     private BigDecimal unitPrice;
-    private Long UOMID;
+    private UUID UOMID;
 }

@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import io.pow.backend.product.dto.ProductDTO;
 import io.pow.backend.product.entity.Product;
 import io.pow.backend.uom.UOMTests.UOMTestRequest;
 import io.pow.backend.uom.UOMTests.UOMTestResponse;
@@ -133,7 +134,7 @@ public class ProductTests {
         createProduct("code1list", "description1");
         createProduct("code2list", "description2");
 
-        String url = baseUrl + "/products/v1/";
+        String url = baseUrl + "/products/v1";
         ResponseEntity<Product[]> response = restTemplate.getForEntity(url, Product[].class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -147,12 +148,12 @@ public class ProductTests {
         createProduct(code, "descriptionSpecific");
 
         String url = baseUrl + "/products/v1/" + code;
-        ResponseEntity<Product[]> response = restTemplate.getForEntity(url, Product[].class);
+        ResponseEntity<ProductTestResponse[]> response = restTemplate.getForEntity(url, ProductTestResponse[].class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().length).isEqualTo(1);
-        assertThat(response.getBody()[0].getCode()).isEqualTo(code);
+        assertThat(response.getBody()[0].code()).isEqualTo(code);
     }
 
     private ResponseEntity<ProductTestResponse> createProduct(String code, String description) {

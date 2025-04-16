@@ -1,12 +1,13 @@
 package io.pow.backend.product;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import io.pow.backend.product.entity.Product;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     boolean existsByCode(String code);
     Optional<Product> findByCode(String code);
