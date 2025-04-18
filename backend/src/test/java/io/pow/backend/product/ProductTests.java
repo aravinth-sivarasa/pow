@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import io.pow.backend.product.entity.Product;
-import io.pow.backend.uom.UOMTests.UOMTestRequest;
-import io.pow.backend.uom.UOMTests.UOMTestResponse;
 import jakarta.annotation.PostConstruct;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,13 +44,13 @@ public class ProductTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().code()).isEqualTo("P40002");
-        assertThat(response.getBody().error()).isEqualTo("Product code is required");
+        assertThat(response.getBody().error()).isEqualTo("Product sku is required");
 
         response = createProduct(null, "description1");
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().code()).isEqualTo("P40002");
-        assertThat(response.getBody().error()).isEqualTo("Product code is required");
+        assertThat(response.getBody().error()).isEqualTo("Product sku is required");
     }
 
     @Test
@@ -72,60 +70,17 @@ public class ProductTests {
 
     @Test
     void createProduct_CodeAlreadyExists() throws Exception {
-        String code = "codeA";
-        ResponseEntity<ProductTestResponse> response = createProduct(code, "description1");
+        String sku = "codeA";
+        ResponseEntity<ProductTestResponse> response = createProduct(sku, "description1");
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().message()).isEqualTo("Product created successfully");
 
-        response = createProduct(code, "description2");
+        response = createProduct(sku, "description2");
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().code()).isEqualTo("P40004");
-        assertThat(response.getBody().error()).isEqualTo("Product code already exists");
-    }
-
-    @Test
-    void createProductUOMs_Success() throws Exception {
-        String code = "code1UOM";
-        createProduct(code, "description1"); // Ensure the product exists
-        createUOM("uomCode1", "uomCode1");
-        ProductUOMTestRequest uomRequest = new ProductUOMTestRequest("uomCode1", 100.50);
-        ProductTestRequest productRequest = new ProductTestRequest(List.of(uomRequest));
-
-        ResponseEntity<ProductTestResponse> response = createProductUOMs(code, productRequest);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().message()).isEqualTo("Product UOM created successfully");
-    }
-
-    @Test
-    void createProductUOMs_ProductNotFound() throws Exception {
-        String code = "nonExistentCode";
-
-        ProductUOMTestRequest uomRequest = new ProductUOMTestRequest("uomCode1", 100.50);
-        ProductTestRequest productRequest = new ProductTestRequest(List.of(uomRequest));
-
-        ResponseEntity<ProductTestResponse> response = createProductUOMs(code, productRequest);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().code()).isEqualTo("P40001");
-        assertThat(response.getBody().error()).isEqualTo("Product not found");
-    }
-
-    @Test
-    void createProductUOMs_UOMNotFound() throws Exception {
-        String code = "code2UOM";
-        createProduct(code, "description1"); // Ensure the product exists
-
-        ProductUOMTestRequest uomRequest = new ProductUOMTestRequest("nonExistentUOM", 100.50);
-        ProductTestRequest productRequest = new ProductTestRequest( List.of(uomRequest));
-
-        ResponseEntity<ProductTestResponse> response = createProductUOMs(code, productRequest);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().code()).isEqualTo("U40004");
-        assertThat(response.getBody().error()).isEqualTo("UOM not found");
+        assertThat(response.getBody().error()).isEqualTo("Product sku already exists");
     }
 
     @Test
@@ -143,51 +98,39 @@ public class ProductTests {
 
     @Test
     void getProducts_ByCode() throws Exception {
-        String code = "codeSpecific";
-        createProduct(code, "descriptionSpecific");
+        String sku = "codeSpecific";
+        createProduct(sku, "descriptionSpecific");
 
-        String url = baseUrl + "/products/v1/" + code;
+        String url = baseUrl + "/products/v1/" + sku;
         ResponseEntity<ProductTestResponse[]> response = restTemplate.getForEntity(url, ProductTestResponse[].class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().length).isEqualTo(1);
-        assertThat(response.getBody()[0].code()).isEqualTo(code);
+        assertThat(response.getBody()[0].sku()).isEqualTo(sku);
     }
 
-    private ResponseEntity<ProductTestResponse> createProduct(String code, String description) {
+    private ResponseEntity<ProductTestResponse> createProduct(String sku, String description) {
         String url = baseUrl + "/products/v1";
         return this.restTemplate.postForEntity(
                 url,
-                new ProductTestRequest(code, description),
-                ProductTestResponse.class);
-    }
-    private ResponseEntity<UOMTestResponse> createUOM(String code, String description) {
-        String url = baseUrl + "/uoms/v1";
-        return this.restTemplate.postForEntity(
-                url,
-                new UOMTestRequest(code, description),
-                UOMTestResponse.class);
-    }
-
-    private ResponseEntity<ProductTestResponse> createProductUOMs(String code, ProductTestRequest productRequest) {
-        String url = baseUrl + "/products/v1/" + code + "/uoms";
-        return this.restTemplate.postForEntity(
-                url,
-                productRequest,
+                new ProductTestRequest(sku, description),
                 ProductTestResponse.class);
     }
 
-    public record ProductTestRequest(String code, String description,List<ProductUOMTestRequest> productUOMs) {
+    public record ProductTestRequest(String sku, String description,List<ProductUOMTestRequest> productUOMs) {
         public ProductTestRequest(List<ProductUOMTestRequest> productUOMs) {
             this(null, null, productUOMs);
         }
-        public ProductTestRequest(String code, String description) {
-            this(code, description, null);
+        public ProductTestRequest(String sku, String description) {
+            this(sku, description, null);
         }
     }
-    public record ProductTestResponse(String code, String message, String error) {
+    public record ProductTestResponse(String sku, String message, String error,String code) {
+        public ProductTestResponse(String sku, String message, String error) {
+            this(sku, message, error, null);
+        }
     }
-    public record ProductUOMTestRequest(String code, double unitPrice) {
+    public record ProductUOMTestRequest(String sku, double unitPrice) {
     }
 }

@@ -33,15 +33,6 @@ public class ProductControllerV1 {
                 ProductMessages.PRODUCT_CREATED.getMessage()));
     }
 
-
-    @PostMapping("{code}/uoms")
-    public ResponseEntity<ProductResponse> createProductUOMs(@PathVariable String code, @RequestBody ProductRequest productRequest) {
-        productRequest.setCode(code);
-        productService.createProductUOMs(productRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponse(
-                ProductMessages.PRODUCT_UOM_CREATED.getMessage()));
-    }
-
     @GetMapping({"", "/{code}"})
     public ResponseEntity<List<Product>> listProducts(@PathVariable(required = false) String code) {
         List<Product> products = productService.listProducts(code);

@@ -9,7 +9,7 @@ import io.pow.backend.product.entity.Product;
 
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
-    boolean existsByCode(String code);
-    Optional<Product> findByCode(String code);
+    boolean existsBySku(String sku);
+    Optional<Product> findBySku(String sku);
     
 }

@@ -1,15 +1,18 @@
 package io.pow.backend.product.entity;
 
-import io.pow.backend.uom.UoM;
+
+
+
+import io.pow.backend.currency.Currency;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
 @Embeddable
-public class ProductUoMKey {
+public class ProductPriceKey {
     @ManyToOne
     private Product product;
     @ManyToOne
-    private UoM uom;
+    private Currency currency;
 }

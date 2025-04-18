@@ -9,14 +9,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.pow.backend.product.dto.ProductRequest;
 import io.pow.backend.product.entity.Product;
-import io.pow.backend.product.entity.ProductUoM;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Service
 @Validated
@@ -26,8 +26,7 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private ProductUOMRepository productUOMRepository;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -43,23 +42,12 @@ public class ProductService {
         }
     }
 
-    public void createProductUOMs(@ProductUOMValidate ProductRequest productRequest) {
-        UUID productId = productRequest.getProductId();
-        productRequest.getProductUOMs().forEach(productUOMRequest -> {
-            UUID uomId = productUOMRequest.getUOMID();
-            ProductUoM productUOM = new ProductUoM(
-                    productId, uomId, productUOMRequest.getUnitPrice());
-            productUOMRepository.save(productUOM);
-        });
-        logger.info(ProductMessages.PRODUCT_UOM_CREATED.getMessage());
-    }
-
     public List<Product> listProducts(String codeStr) {
         Optional<String> code = Optional.ofNullable(codeStr);
         if (code.isEmpty()) {
             return productRepository.findAll();
         } else {
-            return productRepository.findByCode(code.get())
+            return productRepository.findBySku(code.get())
                     .map(List::of)
                     .orElse(List.of());
         }

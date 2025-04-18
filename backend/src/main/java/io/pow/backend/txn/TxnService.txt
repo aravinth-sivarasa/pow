@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import io.pow.backend.product.entity.ProductUoM;
+import io.pow.backend.product.entity.ProductPrice;
 
 import java.util.Date;
 
@@ -30,7 +30,7 @@ public class TxnService {
         final Txn saveTxn = txnRepository.save(txn);
         txnRequest.getTxnDetails().forEach(txnDetailRequest -> {
             TxnDetail txnDetail = new TxnDetail();
-            ProductUoM productUOM = txnDetailRequest.getProductUOM();
+            ProductPrice productUOM = txnDetailRequest.getProductUOM();
             txnDetail.setTxn(saveTxn);
             txnDetail.setProductUOM(txnDetailRequest.getProductUOM());
             txnDetail.setQty(txnDetailRequest.getQty());

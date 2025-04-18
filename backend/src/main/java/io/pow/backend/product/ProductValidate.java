@@ -37,7 +37,7 @@ class ProductValidator implements ConstraintValidator<ProductValidate, ProductRe
 
     @Override
     public boolean isValid(ProductRequest productRequest, ConstraintValidatorContext context) {
-        if (productRequest.getCode() == null || productRequest.getCode().isEmpty()) {
+        if (productRequest.getSku() == null || productRequest.getSku().isEmpty()) {
             logger.error(ProductMessages.PRODUCT_CODE_REQUIRED.getMessage());
             throw new ProductException(ProductMessages.PRODUCT_CODE_REQUIRED);
         }
@@ -45,7 +45,7 @@ class ProductValidator implements ConstraintValidator<ProductValidate, ProductRe
             logger.error(ProductMessages.PRODUCT_DESCRIPTION_REQUIRED.getMessage());
             throw new ProductException(ProductMessages.PRODUCT_DESCRIPTION_REQUIRED);
         }
-        if (productRepository.existsByCode(productRequest.getCode())) {
+        if (productRepository.existsBySku(productRequest.getSku())) {
             logger.error(ProductMessages.PRODUCT_ALREADY_EXISTS.getMessage());
             throw new ProductException(ProductMessages.PRODUCT_ALREADY_EXISTS);
         }
